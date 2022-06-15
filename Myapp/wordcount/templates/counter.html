@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Count App</title>
+  <style>
+    /* border box */
+
+    html {
+      box-sizing: border-box;
+      -webkit-user-select: none;
+      /* Chrome all / Safari all */
+      -moz-user-select: none;
+      /* Firefox all */
+      -ms-user-select: none;
+      /* IE 10+ */
+      user-select: none;
+      /* Likely future */
+    }
+
+    *,
+    *:before,
+    *:after {
+      box-sizing: inherit;
+    }
+
+    b {
+      font-weight: bold;
+    }
+
+
+    /* main app styles */
+
+    body {
+      width: 700px;
+      margin: 0 auto;
+      background-color: #8baedb;
+      font-family: 'Source Sans Pro', sans-serif;
+      color: #111;
+    }
+
+    .container {
+      margin: 2% auto;
+      padding: 15px;
+      background-color: #FFFFFF;
+      -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      text-align: center;
+      margin: 1% 0 3%;
+    }
+
+    textarea {
+      width: 100%;
+      height: 250px;
+      padding: 10px;
+      border: 1px solid #d9d9d9;
+      outline: none;
+      font-size: 1rem;
+      resize: none;
+      line-height: 1.5rem;
+    }
+
+    textarea:hover {
+      border-color: #C0C0C0;
+    }
+
+    textarea:focus {
+      border-color: #4D90FE;
+    }
+
+    .output.row {
+      width: 100%;
+      border: 1px solid #DDD;
+      font-size: 1.1rem;
+      margin: 1% 0;
+      background-color: #F9F9F9;
+      border-radius: 10px;
+    }
+
+    .output.row div {
+      display: inline-block;
+      width: 42%;
+      margin: 1%;
+      border-radius: 10px;
+    }
+
+    .output.row span {
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    #readability:active {
+      background-color: #307AF3;
+    }
+
+    .keywords {
+      margin: 4% 0 0;
+      font-size: 2rem;
+      font-weight: 900;
+      border-radius: 10px;
+    }
+
+    .keywords ul {
+      font-weight: 400;
+      border: 1px solid #DDD;
+      font-size: 1.4rem;
+      background-color: #F9F9F9;
+      margin: 2% 0;
+      border-radius: 10px;
+    }
+
+    .keywords li {
+      display: inline-block;
+      width: 44%;
+      padding: 10px;
+      margin: 1%;
+      border-radius: 10px;
+    }
+
+    .btnSend {
+      width: 120px;
+      height: 60px;
+      border: 2px solid black;
+      border-radius: 10px;
+      background-color: blanchedalmond;
+      color: black;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .btnSend:hover {
+      background-color: blanchedalmond;
+      color: red;
+      transition: ls ease;
+    }
+
+    .btnSend::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50px;
+      background: transparent;
+      height: 50%;
+      width: 100%;
+      transform: perspective(lem) rotateX(40deg) scale(1, 0.35);
+      filter: blur(8px);
+      transition: ls ease;
+    }
+
+    .btnSend:hover::before {
+      background: white;
+      top: 70px;
+    }
+
+
+    /* 
+** Making it responsive
+*/
+
+    @media (max-width: 750px) {
+      body {
+        width: 600px;
+      }
+
+      .output.row {
+        font-size: 1.2rem;
+      }
+
+      .output.row span {
+        font-size: 1.3rem;
+      }
+
+      .keywords ul {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+
+      /* rewriting old styles */
+      body {
+        width: 95%;
+      }
+
+      .output.row {
+        border: none;
+        background-color: #FFF;
+      }
+
+      .output.row div {
+        display: block;
+        width: 100%;
+        padding: 10px 15px;
+        margin: 2% auto;
+        border: 1px solid #DDD;
+        font-size: 1.8rem;
+        background-color: #F9F9F9;
+      }
+
+      .output.row span {
+        font-size: 2rem;
+      }
+
+      .keywords {
+        margin: 10% auto;
+      }
+
+      .keywords ul {
+        font-weight: 400;
+        border: none;
+        font-size: 1.8rem;
+        background-color: #F9F9F9;
+        margin: 5% 0;
+      }
+
+      .keywords li {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 2% auto;
+        border: 1px solid #DDD;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <body>
+    {% if i %}
+    <div class="output row">
+      <p><b>Your Text</b>:<br />{{ text }}</p>
+    </div>
+    <div class="output row">
+      <div>Letter Count: <span id="characterCount">{{ CharListLen}}</span></div>
+      <div>Words: <span id="wordCount">{{ wordlistlen}}</span></div>
+    </div>
+    <div class="output row">
+      <div>Sentences: <span id="sentenceCount">{{ SentenceLen }}</span></div>
+      <div>Reading Time: <span id="readingTime">{{ ReadingTime }}</span></div>
+    </div>
+    <div>
+      <button href="{% url 'Home' %}" class="btnSend" style="float: right;" onclick="location.href = '/Home'">Back Home
+        Page</button>
+    </div>
+    <div class="keywords">
+      Top keywords:
+
+      <ul id="topKeywords">
+        {% for word,count in SortedWordListCountDict %}
+        <li><b>{{ word }} </b>: {{ count }} </li>
+        {% endfor %}
+      </ul>
+    </div>
+    </div>
+    {% endif %}
+  </body>
+
+</html>
